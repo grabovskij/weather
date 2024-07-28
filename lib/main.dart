@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:weather/data/weather_forecast/weather_forecast.dart';
 
 void main() {
   runZonedGuarded(
@@ -35,12 +38,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final WeatherForecastDataSource dataSource = WeatherForecastDataSource(Dio());
+  Future<void> _incrementCounter() async {
+    final data = await dataSource.getWeather(lat: 55.751244, lon: 37.618423);
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    log('Response: $data');
   }
 
   @override
@@ -56,10 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
