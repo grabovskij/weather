@@ -34,6 +34,9 @@ class WeatherData extends Equatable {
   /// Текстовое представление времени данных.
   final String dtTxt;
 
+  /// DateTime представление времени данных.
+  final DateTime dateTime;
+
   /// Количество дождя за последние 3 часа (может быть null).
   final double? rain;
 
@@ -48,6 +51,7 @@ class WeatherData extends Equatable {
     required this.pop,
     required this.sys,
     required this.dtTxt,
+    required this.dateTime,
     this.rain,
   });
 
