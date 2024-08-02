@@ -2,8 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:weather/configuration/theme/extensions/context_theme_extensions.dart';
+import 'package:weather/core/di/repository_scope.dart';
+import 'package:weather/core/utils/app_string_format.dart';
 import 'package:weather/domain/enums/weather_type.dart';
+import 'package:weather/domain/extensions/city_data_time_parser.dart';
 import 'package:weather/domain/models/weather_response.dart';
+import 'package:weather/features/home/extensions/weather_type_asset_provider.dart';
+import 'package:weather/features/home/widgets/weather_today_widget.dart';
 
 class HomeLoadedView extends StatelessWidget {
   final WeatherResponse response;
@@ -15,185 +20,93 @@ class HomeLoadedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: WeatherTodayWidget(
-              color1: context.colors.primary,
-              color2: context.colors.secondary,
-              cityName: response.city.name,
-              weatherName: response.list.first.weather.first.description,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 44,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: response.list.length,
-                            itemBuilder: (context, index) {
-                              final weatherData = response.list[index];
-                              final dateTime = weatherData.dateTime;
-                              final time = '${dateTime.hour}:${dateTime.minute}:${dateTime.second}';
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 24),
+          child: StreamBuilder(
+            stream: RepositoryScope.of(context).weatherForecastRepository.currentWeatherStream,
+            builder: (context, snapshot) {
+              final weatherData = snapshot.data;
 
-                              return A(
-                                degreesCelsius: (weatherData.main.temp - 273).toInt(),
-                                weatherType: WeatherType.rain,
-                                time: time,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+              if (weatherData == null) {
+                return const SizedBox.shrink();
+              }
+
+              return WeatherTodayWidget(
+                backgroundColor: context.colors.secondary,
+                foregroundColor: context.colors.primary,
+                cityName: response.city.name,
+                weatherName: weatherData.weather.first.description,
+                temp: (weatherData.main.temp - 273.15).toInt(),
+                feelsLike: (weatherData.main.feelsLike - 273.15).toInt(),
+                sunset: response.city.sunsetDataTime,
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        response.list.length.clamp(0, 5),
+                        (index) {
+                          final weatherData = response.list[index];
+                          final dateTime = weatherData.dateTime;
+                          final time = AppStringFormat.time24Hours(dateTime);
+
+                          return WeatherPreviewWidget(
+                            degreesCelsius: (weatherData.main.temp - 273.15).toInt(),
+                            weatherType: WeatherType.rain,
+                            time: time,
+                          );
+                        },
+                      ),
                     ),
-                  ),
+                    Divider(color: context.colors.text, height: 41, indent: 32, endIndent: 32),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        response.list.length.clamp(0, 5),
+                        (index) {
+                          final weatherData = response.list[index + 5];
+                          final dateTime = weatherData.dateTime;
+                          final time = AppStringFormat.time24Hours(dateTime);
+
+                          return WeatherPreviewWidget(
+                            degreesCelsius: (weatherData.main.temp - 273.15).toInt(),
+                            weatherType: WeatherType.rain,
+                            time: time,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-class WeatherTodayWidget extends StatelessWidget {
-  final String cityName;
-  final String weatherName;
-  final Color color1;
-  final Color color2;
-
-  const WeatherTodayWidget({
-    required this.cityName,
-    required this.weatherName,
-    required this.color1,
-    required this.color2,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(35),
-        color: color1,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 25,
-          horizontal: 40,
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Text(
-                'Today',
-                style: TextStyle(
-                  color: color2,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Icon(
-                      Icons.cloud,
-                      color: color2,
-                      size: 95,
-                    ),
-                  ),
-                  Text(
-                    '25°',
-                    style: TextStyle(
-                      color: color2,
-                      fontSize: 100,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              weatherName,
-              style: TextStyle(
-                color: color2,
-                fontSize: 15,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Text(
-                cityName,
-                style: TextStyle(
-                  color: color2,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-            Text(
-              '21 Oct 2019',
-              style: TextStyle(
-                color: color2,
-                fontSize: 15,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Feels like 28',
-                    style: TextStyle(
-                      color: color2,
-                      fontSize: 15,
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: color2,
-                    width: 20,
-                    thickness: 1,
-                  ),
-                  Text(
-                    'Sunset 18:20',
-                    style: TextStyle(
-                      color: color2,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class A extends StatelessWidget {
+class WeatherPreviewWidget extends StatelessWidget {
   final String time;
   final int degreesCelsius;
   final WeatherType weatherType;
 
-  const A({
+  const WeatherPreviewWidget({
     required this.degreesCelsius,
     required this.weatherType,
     required this.time,
@@ -207,12 +120,21 @@ class A extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(time),
+          Text(
+            time,
+            style: context.textStyles.bodyMedium,
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.cloud),
-              Text('$degreesCelsius'),
+              Image.asset(
+                weatherType.weatherIconAssetPath,
+                width: 24,
+              ),
+              Text(
+                '$degreesCelsius°',
+                style: context.textStyles.bodyMedium,
+              ),
             ],
           ),
         ],

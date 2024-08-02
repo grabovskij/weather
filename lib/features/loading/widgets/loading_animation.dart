@@ -13,11 +13,10 @@ class LoadingAnimation extends StatefulWidget {
   });
 
   @override
-  _LoadingAnimationState createState() => _LoadingAnimationState();
+  State<LoadingAnimation> createState() => _LoadingAnimationState();
 }
 
-class _LoadingAnimationState extends State<LoadingAnimation>
-    with SingleTickerProviderStateMixin {
+class _LoadingAnimationState extends State<LoadingAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -54,8 +53,7 @@ class _WeatherLoadingPainter extends CustomPainter {
   final Animation<double> animation;
   final Color color;
 
-  _WeatherLoadingPainter({required this.animation, required this.color})
-      : super(repaint: animation);
+  _WeatherLoadingPainter({required this.animation, required this.color}) : super(repaint: animation);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -87,10 +85,8 @@ class _WeatherLoadingPainter extends CustomPainter {
 
     final cloudPath = Path()
       ..moveTo(center.dx - radius / 2, center.dy + radius)
-      ..arcToPoint(Offset(center.dx + radius / 2, center.dy + radius),
-          radius: Radius.circular(radius / 2))
-      ..arcToPoint(Offset(center.dx - radius / 2, center.dy + radius),
-          radius: Radius.circular(radius / 2))
+      ..arcToPoint(Offset(center.dx + radius / 2, center.dy + radius), radius: Radius.circular(radius / 2))
+      ..arcToPoint(Offset(center.dx - radius / 2, center.dy + radius), radius: Radius.circular(radius / 2))
       ..close();
 
     canvas.drawPath(cloudPath, cloudPaint);

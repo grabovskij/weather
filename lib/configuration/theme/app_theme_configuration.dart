@@ -8,7 +8,7 @@ abstract class AppThemeConfiguration {
   static ThemeData create([AppThemeType themeType = AppThemeType.cloudy1]) {
     final appColorsTheme = themeType.createColorTheme();
     final appThemeAssets = AppThemeAssets.create(themeType);
-    final appTextTheme = AppTextTheme.create(secondaryColor: appColorsTheme.secondary, textColor: appColorsTheme.text);
+    final appTextTheme = AppTextTheme.create(secondaryColor: appColorsTheme.primary, textColor: appColorsTheme.text);
 
     return ThemeData(
       useMaterial3: true,

@@ -58,7 +58,7 @@ class DependencyScope extends StatefulWidget {
   ///
   /// Этот метод возвращает `null`, если `DependencyProvider` не найден в цепочке предков.
   static DependencyProvider? maybeOf(BuildContext context) =>
-      context.findAncestorWidgetOfExactType<DependencyProvider>();
+      context.getInheritedWidgetOfExactType<DependencyProvider>();
 
   /// Ищет ближайший предковый виджет `DependencyProvider` и возвращает его.
   ///

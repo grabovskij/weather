@@ -20,7 +20,8 @@ class RepositoryProvider extends InheritedWidget {
 
 class RepositoryScope extends StatefulWidget {
   static RepositoryProvider? maybeOf(BuildContext context) =>
-      context.findAncestorWidgetOfExactType<RepositoryProvider>();
+      // context.findAncestorWidgetOfExactType<RepositoryProvider>();
+      context.getInheritedWidgetOfExactType<RepositoryProvider>();
 
   static RepositoryProvider of(BuildContext context) => maybeOf(context)!;
 

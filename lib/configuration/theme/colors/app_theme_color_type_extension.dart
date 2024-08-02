@@ -54,8 +54,8 @@ extension AppThemeColorTypeExtension on AppThemeType {
 
   AppColorsTheme createColorTheme() {
     return AppColorsTheme(
-      primary: primaryColor,
-      secondary: secondaryColor,
+      secondary: primaryColor,
+      primary: secondaryColor,
       text: Colors.white,
     );
   }

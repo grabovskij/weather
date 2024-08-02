@@ -15,11 +15,11 @@ class HomeLoadingView extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            color: context.colors.primary,
+            color: context.colors.secondary,
           ),
           child: Padding(
             padding: const EdgeInsets.all(25),
-            child: LoadingAnimation(color: context.colors.secondary),
+            child: LoadingAnimation(color: context.colors.primary),
           ),
         ),
       ),
