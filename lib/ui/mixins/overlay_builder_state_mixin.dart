@@ -2,30 +2,26 @@ import 'package:flutter/material.dart';
 
 typedef OverlayBuilder = Widget Function(BuildContext context, VoidCallback hide);
 
-/// Mixin для добавления и управления оверлеем в состояниях [State] виджетов.
 mixin OverlayBuilderStateMixin<T extends StatefulWidget> on State<T> {
-  /// Размер оверлея.
+  /// Размер оверлея
   Size get overlaySize => const Size(100, 40);
 
-  /// Сдвиг оверлея относительно якорной точки [followerAnchor].
+  /// Сдвиг оверлея относительно якорной точки [followerAnchor]
   Offset get offset => Offset.zero;
 
-  /// Якорная точка относительно ребенка.
+  /// Якорная точка относительно ребенка
   Alignment get targetAnchor => Alignment.bottomLeft;
 
-  /// Якорная точка относительно оверлея.
+  /// Якорная точка относительно оверлея
   Alignment get followerAnchor => Alignment.topLeft;
 
-  /// Функция-билдер оверлея.
+  /// Функция-билдер оверлея
   OverlayBuilder get overlayBuilder;
 
-  /// Ссылка на слой для привязки оверлея.
   final LayerLink layerLink = LayerLink();
 
-  /// Экземпляр [OverlayEntry], представляющий оверлей.
   OverlayEntry? _overlayEntry;
 
-  /// Позиция якорной точки относительно глобальных координат.
   Offset? get _position {
     final renderBox = context.findRenderObject() as RenderBox?;
 
@@ -39,10 +35,10 @@ mixin OverlayBuilderStateMixin<T extends StatefulWidget> on State<T> {
   @override
   void dispose() {
     hide();
+
     super.dispose();
   }
 
-  /// Показать оверлей.
   void show() {
     hide();
 
@@ -64,7 +60,6 @@ mixin OverlayBuilderStateMixin<T extends StatefulWidget> on State<T> {
     );
   }
 
-  /// Скрыть оверлей.
   void hide() {
     if (_overlayEntry == null) {
       return;
