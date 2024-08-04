@@ -4,7 +4,7 @@ import 'package:weather/data/data_sources/weather_forecast/mappers/sys_mapper.da
 import 'package:weather/data/data_sources/weather_forecast/mappers/weather_mapper.dart';
 import 'package:weather/data/data_sources/weather_forecast/mappers/wind_mapper.dart';
 import 'package:weather/data/data_sources/weather_forecast/models/weather_data.dart' as transfer_object;
-import 'package:weather/domain/models/weather_data.dart';
+import 'package:weather/domain/models/weather_forecast/weather_data.dart';
 
 extension WeatherDatasMapper on List<transfer_object.WeatherData> {
   List<WeatherData> toEntity() {

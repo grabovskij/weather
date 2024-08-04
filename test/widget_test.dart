@@ -8,9 +8,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weather/core/application.dart';
+import 'package:weather/core/di/dependency.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    final dependency = await Dependency.init(widgetsBinding);
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(const Application());
 

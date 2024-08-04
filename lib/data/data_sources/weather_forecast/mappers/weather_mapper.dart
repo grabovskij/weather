@@ -1,6 +1,5 @@
-import 'package:weather/data/data_sources/weather_forecast/models/weather.dart'
-    as transfer_object;
-import 'package:weather/domain/models/weather.dart';
+import 'package:weather/data/data_sources/weather_forecast/models/weather.dart' as transfer_object;
+import 'package:weather/domain/models/weather_forecast/weather.dart';
 
 extension WeathersMapper on List<transfer_object.Weather> {
   List<Weather> toEntity() {

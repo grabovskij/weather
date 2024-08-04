@@ -36,14 +36,16 @@ class _LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _WeatherLoadingPainter(
-        animation: _controller,
-        color: widget.color,
-      ),
-      child: SizedBox(
-        width: widget.size,
-        height: widget.size,
+    return RepaintBoundary(
+      child: CustomPaint(
+        painter: _WeatherLoadingPainter(
+          animation: _controller,
+          color: widget.color,
+        ),
+        child: SizedBox(
+          width: widget.size,
+          height: widget.size,
+        ),
       ),
     );
   }

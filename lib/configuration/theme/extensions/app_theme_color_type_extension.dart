@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather/configuration/theme/app_theme_type.dart';
 import 'package:weather/configuration/theme/colors/app_colors_theme.dart';
-import 'package:weather/configuration/theme/colors/app_theme_color_type.dart';
 import 'package:weather/core/constants/asset_images.dart';
 
 extension AppThemeColorTypeExtension on AppThemeType {

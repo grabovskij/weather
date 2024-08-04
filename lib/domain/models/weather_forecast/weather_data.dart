@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather/domain/models/clouds.dart';
-import 'package:weather/domain/models/main_weather_info.dart';
-import 'package:weather/domain/models/sys.dart';
-import 'package:weather/domain/models/weather.dart';
-import 'package:weather/domain/models/wind.dart';
+import 'package:weather/domain/models/weather_forecast/clouds.dart';
+import 'package:weather/domain/models/weather_forecast/main_weather_info.dart';
+import 'package:weather/domain/models/weather_forecast/sys.dart';
+import 'package:weather/domain/models/weather_forecast/weather.dart';
+import 'package:weather/domain/models/weather_forecast/wind.dart';
 
 /// Модель данных для представления погодных данных за определенный момент времени.
 class WeatherData extends Equatable {

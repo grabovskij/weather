@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:weather/data/data_sources/weather_forecast/mappers/weather_response_mapper.dart';
 import 'package:weather/data/data_sources/weather_forecast/models/language.dart';
-import 'package:weather/data/data_sources/weather_forecast/models/weather_response.dart'
-    as transfer_object;
-import 'package:weather/domain/models/weather_response.dart';
+import 'package:weather/data/data_sources/weather_forecast/models/weather_response.dart' as transfer_object;
+import 'package:weather/domain/models/weather_forecast/weather_response.dart';
 
 class WeatherForecastDataSource {
   final Dio _dio;
@@ -23,7 +22,7 @@ class WeatherForecastDataSource {
       'https://api.openweathermap.org/data/2.5/forecast',
       queryParameters: {
         'lat': lat,
-        'lon': lat,
+        'lon': lon,
         'appid': _appId,
         'lang': language.code,
       },

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather/domain/models/city.dart';
-import 'package:weather/domain/models/weather_data.dart';
+import 'package:weather/domain/models/weather_forecast/city.dart';
+import 'package:weather/domain/models/weather_forecast/weather_data.dart';
 
 /// Модель данных для представления ответа на запрос погоды.
 class WeatherResponse extends Equatable {

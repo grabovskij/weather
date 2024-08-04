@@ -1,7 +1,6 @@
 import 'package:weather/data/data_sources/weather_forecast/mappers/coordinates_mapper.dart';
-import 'package:weather/data/data_sources/weather_forecast/models/city.dart'
-    as transfer_object;
-import 'package:weather/domain/models/city.dart';
+import 'package:weather/data/data_sources/weather_forecast/models/city.dart' as transfer_object;
+import 'package:weather/domain/models/weather_forecast/city.dart';
 
 extension CityMapper on transfer_object.City {
   City toEntity() {

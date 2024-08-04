@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather/domain/models/coordinates.dart';
+import 'package:weather/domain/models/weather_forecast/coordinates.dart';
 
 /// Модель данных для представления информации о городе.
 class City extends Equatable {
