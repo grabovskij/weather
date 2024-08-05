@@ -14,7 +14,7 @@
 1. Убедитесь, что у вас установлен Flutter SDK.
 2. Клонируйте репозиторий:
    ```sh
-   git clone https://github.com/your-username/weather-app.git
+   git clone https://github.com/grabovskij/weather.git
    ```
 3. Перейдите в папку с проектом:
    ```sh

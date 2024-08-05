@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/domain/models/weather_forecast/weather_response.dart';
-import 'package:weather/features/geolocation/geolocation_search_field.dart';
+import 'package:weather/features/geolocation/widgets/geolocation_search_field.dart';
 import 'package:weather/features/home/widgets/current_weather_display_widget.dart';
 import 'package:weather/features/home/widgets/week_weather_widget.dart';
 
